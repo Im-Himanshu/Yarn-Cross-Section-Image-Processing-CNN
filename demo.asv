@@ -1,0 +1,10 @@
+RGB = imread('Capture.png');
+
+% % imshow(RGB);
+
+I = rgb2gray(RGB);
+threshold = graythresh(I);
+bw = im2bw(I,threshold);
+bw = bwareaopen(bw,);
+
+imshow(bw);
