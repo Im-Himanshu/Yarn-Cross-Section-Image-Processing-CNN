@@ -1,14 +1,13 @@
-RGB = imread('Capture.png');
-
-% % imshow(RGB);
-
+RGB = imread('Capture2.png');
+imshow(RGB);
 I = rgb2gray(RGB);
-threshold = graythresh(I);
+threshold = .70;
 bw = im2bw(I,threshold);
+imshow(bw);
 bw = imcomplement(bw);
 bw = bwareaopen(bw,30);
 bw = imfill(bw,'holes');
-[B,L] = bwboundaries(bw,'noholes');
+[B,L] = bwboundaries(bw,8);
 imshow(label2rgb(L, @jet, [.5 .5 .5]))
 hold on
 for k = 1:length(B)
