@@ -16,35 +16,35 @@ def rgb2gray(rgb):
     return ary
 
 BckgrndClr = 1.0;
-img = mpimg.imread('Tryme.png')  #this will the image of the yarn for which the result are to be calculated
+input ='Tryme.png'
+img = mpimg.imread(input)  #this will the image of the yarn for which the result are to be calculated
 gray = rgb2gray(img)
 aryimage = np.array(gray,float); # in this black should be 0
-catIm = Image.open('Tryme.png')
-s = "Aryimage" + str(0) + ".jpg";
-scipy.misc.imsave(s, aryimage)
 processed = np.ndarray(gray.shape,bool) #boolean will store if processed or not
 processed.fill(False)
-Indfibre = []; # these two will be the final reult of the below function
-MinMax = [];
+Indfibre = []; # these two will be the finahandfibrel reult of the below function
 ImageforAnn = []
 
 #this function will take out all the closed object one by one save them in the different
 # array individually and append in IndFibre as an 2d image
 # and that can be used later to colour code later
-def process(i,j):
+#Below will save the image in imagANN and Indfibre in 30X30 and full image format
+#
+# -----------------------------------------------------------------------------------
+def Segementation(i,j):
     crntFibre = np.ndarray(gray.shape,float)
     crntFibre.fill(BckgrndClr)
     max =[0,0]   # will store max of x and y
     min = [aryimage.shape[0],aryimage.shape[1]] #will store the min of the x and y
-    print("me")
     number = [i,j];
     q = Queue(maxsize=min[0]*min[1])
     q.put(number);
+    time = 0
     while q.qsize()>0 :
+        time+=1
         crnt = q.get()
         i2 = crnt[0]
         j2 = crnt[1]
-        print(crnt)
         if max[0] < crnt[0] :
             max[0] = crnt[0];
         if max[1] < crnt[1]:
@@ -61,73 +61,120 @@ def process(i,j):
                     w = aryimage[i2+i1,j2+j1]
                     Notprocessed = not processed[i2+i1,j2+j1];
                     #tr1 = not tr ;
-                    NotBackground = str(aryimage[i2+i1,j2+j1]) != str(BckgrndClr)
+                    NotBackground = str(aryimage[i2+i1,j2+j1]) <= str(.68)
                     if(Notprocessed and NotBackground ):
                         putme = [i2+i1,j2+j1]
                         processed[i2+i1,j2+j1] =True
                         q.put(putme)
-    Indfibre.append(crntFibre);
-    Kamka = crntFibre[min[0]:max[0],min[1]:max[1]]
-    s = "Myfile" +str(i)+".jpg";
-    scipy.misc.imsave(s, Kamka)
-    catIm = Image.open(s)
-    width, height = catIm.size
-    Sized = catIm.resize((30, 30)) #as ANN take a image of 30 by 30 each resizign this one
-    catIm.save("reshaped " + str(i)+".jpg") #don't know any other method to resize so doing this only
-    Kamka2 = np.reshape(Sized, (1, 900))
-    ImageforAnn.append(Kamka2)
-    MinMax.append([min[0],min[1],max[0],max[1]])
-    return 0
+
+    if(time>30):
+       Indfibre.append(crntFibre);
+       s = "Crntfibre" + str(i) + ".png";
+       scipy.misc.imsave(s, crntFibre)
+       X1 = min[0] - 5
+       x2 = max[0] + 5
+       Y1 = min[1] - 5
+       y2 = max[1] + 5
+       if (X1 < 0 or Y1 < 0):
+           Y1 += 5;
+           X1 += 5;
+       if ((x2 > crntFibre.shape[0]) or (y2 > crntFibre.shape[1])):
+           x2 = x2 - 5
+           y2 = y2 - 5
+
+       CropedFibre = crntFibre[X1:x2, Y1:y2]
+       # Kamka = crntFibre[min[0]:max[0],min[1]:max[1]]
+       s = "ANNFeed" +str(1)+".png";
+       scipy.misc.imsave(s, CropedFibre)
+       catIm = Image.open(s)
+       width, height = catIm.size
+       Sized = catIm.resize((30, 30)) #as ANN take a image of 30 by 30 each resizign this one
+       #catIm.save("reshaped " + str(i)+".png") #don't know any other method to resize so doing this only
+       ANNfeed = np.reshape(Sized, (1, 900))
+       ANNfeed = np.where(ANNfeed<255,0,1)
+       #ANNfeed2 = np.reshape(ANNfeed, (30, 30))
+       #scipy.misc.imsave("ANNFEED final"+str(i)+".png", ANNfeed2)
+       ImageforAnn.append(ANNfeed)
+       return 0
 
 for i in range(0,gray.shape[0]) :
     for j in range(0,gray.shape[1]):
         notprocessed = not processed[i,j]
-        notAbackground = (str(aryimage[i, j]) != str(BckgrndClr));
+        notAbackground = (str(aryimage[i, j]) <= str(.67));
         if notprocessed and notAbackground :
             processed[i,j] =True;
-            process(i,j)
+            Segementation(i,j)
 print("stoper")
+#above will save the image in imagANN and Indfibre in 30X30 and full image format
+#--------------------------------------------------------------------------------------------------
 
 
-
-
-category = [1,2,1,2] #something like that froom the ANN
+category = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2] #something like that froom the ANN
 def makeColourCodedImage():
 #this one will be after the prediction of the label for the Images for ANN
      ColorCodedImage = np.ndarray(gray.shape,int) #boolean will store if processed or not
      ColorCodedImage.fill(0)
      p = 0
      for fibre in Indfibre :
-         #colour =
+         s = "fibre" + str(p) + ".png";
+         scipy.misc.imsave(s, fibre)
+         Midimage = np.ndarray(gray.shape, int)  # boolean will store if processed or not
+         Midimage.fill(0)
          p = p+1
          value = category[p-1]
          n = fibre.shape[0]
          m = fibre.shape[1]
-         start = False;
-         continum = False;
          for i in range(0,n):
              k = 0;
+             strtingvalue = 0
+             endvalue = 0;
              for j in range (0,m):
-                 if(k<8):
-                   var = str(fibre[i,j])
-                   Notequal = str(var) != str(BckgrndClr)
-                   if( (not start) and Notequal):
-                       start = True;
-                       continum = True
-                   elif (start and (not Notequal) and continum):
-                       continum = False;
-                       fibre[i, j] = 0;
-                       ColorCodedImage[i,j] = value
-                   elif ((start and not Notequal) or continum):
-                       fibre[i,j] = 0; #or what is the boundary colour
-                       ColorCodedImage[i,j] = value;
-                   elif(start and (not continum) and Notequal):
-                       break
-                   if continum :
-                       k+=1
+                 var = str(fibre[i, j])
+                 Notequal = str(var) != str(BckgrndClr)
+                 if Notequal:
+                     strtingvalue = j;
+                     break
+             for j in range(m-1,-1,-1): #means step of -1 upto -1
+                 var = str(fibre[i, j])
+                 Notequal = str(var) != str(BckgrndClr)
+                 if Notequal:
+                     endvalue = j;
+                     break
+             for j in range(strtingvalue,endvalue):
+                 #fibre[i, j] = 0;  # or what is the boundary colour
+                 Midimage[i,j] = value;
 
-             start = False
-             continum = False
+         for j in range(0, m):
+             k = 0;
+             startingvalue = 0
+             endvalue = 0;
+             for i in range(0, n):
+                 var = str(fibre[i, j])
+                 Notequal = str(var) != str(BckgrndClr)
+                 if Notequal:
+                     startingvalue = i;
+                     break
+             for i in range(n - 1, -1,-1):
+                 var = str(fibre[i, j])
+                 Notequal = str(var) != str(BckgrndClr)
+                 if Notequal:
+                     endvalue = i;
+                     break
+             for i in range(startingvalue, endvalue):
+                 fibre[i, j] = 0;  # or what is the boundary colour
+                 Midimage[i, j] += value;
+
+         for i in range(0, n):
+             k = 0;
+             strtingvalue = 0
+             endvalue = 0;
+             for j in range(0, m):
+                 if (Midimage[i,j] > value):
+                     ColorCodedImage[i,j] = value;
+                     fibre[i,j] = 0;
+                 # else :
+                 #     ColorCodedImage[i,j] = BckgrndClr;
+
          s = "after " + str(p) + ".jpg";
          scipy.misc.imsave(s, fibre)
      return ColorCodedImage
@@ -135,6 +182,9 @@ def makeColourCodedImage():
 ColorCodedImage = makeColourCodedImage()
 
 #check this it wil lahve two different color
+
+#Colorcoded image will save the value(i.e. its category at the pixel position)
+# at the fibre location and it background is 0 so it is different from genral
 scipy.misc.imsave("ColorCodedImage.jpg", ColorCodedImage)
 
 def CalCentroid():
@@ -151,11 +201,8 @@ def CalCentroid():
 
 
 centroid = CalCentroid()
-# draw.ellipse((40, 40) + bigsize, fill=255)
-start = 5
+start = 5;
 jump = 3;
-# total = max(ColorCodedImage.size[0],ColorCodedImage.size[1])
-# steps  =int((total)/jump)
 centreX = centroid[0];
 centreY = centroid[1];
 PkgDensity = []
@@ -168,8 +215,8 @@ PkgDensity = []
 #     draw.ellipse([centreX - radii, centreY - radii, centreX + radii, centreY + radii], fill=255)
 #     mask = mask.resize(im.size, Image.ANTIALIAS)
 #     im.putalpha(mask)
-
-#max = math.sqrt((centroid[0])**2+ (centroid[1]-j)**2)
+# lets store the distance of all the pixel from the centre in the array
+# individually for all type i.e. 1 and 2
 NoofPixel1 = {}
 NoofPixel2 = {}
 totalPixel = {}
@@ -196,12 +243,20 @@ for i in range(0, gray.shape[0]):
             check = 0
         totalPixel.update(({PixelRange: check + 1}))
 
-
+e =0
 def MAtplotcurve(NofPixel11,NoofPixel22,totalPixel1):
+       e = 0
+       image2 = Image.open(input)
+       draw = ImageDraw.Draw(image2)
+       draw.point((centreX, centreY), 'red')
+       x = centreX
+       y = centreY
        X = []
        Y1 =[]
        Y2 = []
        for i in range(0,max+1):
+           r = start+e*jump;
+           draw.ellipse((x - r, y - r, x + r, y + r), fill=(0, 0, 0, 0))
            X.append(i)
            p = NofPixel11.get(i)
            q = NoofPixel22.get(i)
@@ -214,7 +269,7 @@ def MAtplotcurve(NofPixel11,NoofPixel22,totalPixel1):
                r =1
            Y1.append(float(p/r))
            Y2.append(float(q/r))
-
+       image2.save('test.png')
        pl.plot(X, Y1, 'r')
        pl.plot(X, Y2, 'g')
        # give plot a title
@@ -228,3 +283,5 @@ def MAtplotcurve(NofPixel11,NoofPixel22,totalPixel1):
        pl.show()
     #check how to crop a circular region in the PIL and jsut do it
 MAtplotcurve(NoofPixel1,NoofPixel2,totalPixel)
+
+print("khatam ho gya ")

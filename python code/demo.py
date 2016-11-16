@@ -53,13 +53,13 @@
 # print(b)
 
 # for increasin the size or decreasing the size of an image
-# from PIL import  Image
-# catIm = Image.open("Tryme.png")
-# width, height = catIm.size
-# quartersizedIm = catIm.resize((int(width / 2), int(height / 2)))
-# quartersizedIm.save('quartersized.png')
-# svelteIm = catIm.resize((25, 25))
-# svelteIm.save('svelte.png')
+from PIL import  Image
+catIm = Image.open("Tryme.png")
+width, height = catIm.size
+quartersizedIm = catIm.resize((int(width / 2), int(height / 2)))
+quartersizedIm.save('quartersized.png')
+svelteIm = catIm.resize((25, 25))
+svelteIm.save('svelte.png')
 
 #image circular crooping
 # from PIL import Image, ImageOps, ImageDraw
@@ -97,19 +97,20 @@
 # img.save('greyscaleyarn.png')
 # im = imread("greyscaleyarn.png");
 # print("yahoo")
+#
+# dict = {}
+# for i in range(0,4):
+#     dict.update({i:1})
+# for i in range(0,8):
+#     j = dict.get(i)
+#     if j == None:
+#         j = 0
+#
+#
+#     dict.update({i:j+1})
+#
+# print(dict)
 
-dict = {}
-for i in range(0,4):
-    dict.update({i:1})
-for i in range(0,8):
-    j = dict.get(i)
-    if j == None:
-        j = 0
-
-
-    dict.update({i:j+1})
-
-print(dict)
-
-
+for j in range(5,-1):
+    print(j)
 
