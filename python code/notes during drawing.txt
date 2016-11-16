@@ -1,0 +1,11 @@
+instrauction for drawing 
+
+create a folder Demoimages for seeing the images in the jpg format and see the data loass during the rotation so 
+draw in between of the window so that data loss will be less during rotation
+
+check every time if there is any error 
+
+if u have presseds button and do not want to save it before typing 1,2 and pressing enter then force stop the program from the pycharm that image won't get saved 
+and if u have any doubt about the image qualty then don't save it redraw it.
+
+I have updated the font size adjust if u want 

@@ -1,7 +1,6 @@
 RGB = imread('Capture5.png');
 % % imshow(RGB);
 I = rgb2gray(RGB);
-
 %I = imread('circuit.tif');
 threshold = graythresh(I);
 bw = im2bw(I,threshold);

@@ -1,4 +1,4 @@
-RGB = imread('Capture2.png');
+RGB = imread('threshold.png');
 imshow(RGB);
 I = rgb2gray(RGB);
 threshold = .70;
