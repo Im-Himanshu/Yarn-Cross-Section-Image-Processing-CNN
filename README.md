@@ -6,18 +6,18 @@
 Before getting started into the actual project here is an hypothetical situation to understand the world of textile. I will discuss very briefly about shape of fibers and how it affects fiber's physical property. 
 
 ## About Fibers and Yarns
-As shown in the image below fabric is made up of yarn knitted or woven together in different pattern. Similarly, Yarn is made up of fibres strand twisted together.
+As shown in the image below, fibers are used to make yarn, yarns are used to make up fabric.
 ![img_2.png](https://github.com/Im-Himanshu/Yarn-Cross-Section-Image-Processing-CNN/assets/16800094/c378eb4f-34e1-4ada-b8f7-91372a6bf315)
 
-The texture, warmth, water-retention and many other physical properties of the fabric depends on the kind of fibre used. Different fibre has different property like cotton tends to have soft and rough texture similarly polyester have shinny and smooth texture for its fiber. These property comes from their inherent molecular structure and the shape of fiber cross-section. Image below shows cross-section of different type of fibers.   
+Many physical properties of the fabric like texture, warmth, water-retention, etc. depends on the kind of fibre used in making the yarn and then fabric. Different fibres has different shape and hence different property like, As shown in image, cotton, a natural fibre, tends to have convulated strand which gives it the rough texture, polyester, a man made fiber has circular shape and have smooth and shinny texture.  Images below shows different type of cross-section for different type of fibers.
 
 ![img_3.png](https://github.com/Im-Himanshu/Yarn-Cross-Section-Image-Processing-CNN/assets/16800094/d107c3e9-7ce0-4d66-9405-e35fc565858f)
-one very prominent example of this is hollow fibers used in most of the blankets and pillows. The most important property of these fibers is their thermal insulation property which comes from the air trapped inside the hollow structure.  
+ These property also comes from their inherent molecular structure and physical appearance of it. One very prominent example of this is hollow fibers, used in most of the blankets and pillows. The most important property of these fibers is their remarkable thermal insulation property, which is resulted from the air trapped inside the hollow structure and as we know air is a great insulator of heat.  
 ![img_4.png](https://github.com/Im-Himanshu/Yarn-Cross-Section-Image-Processing-CNN/assets/16800094/e578dfb5-ec5b-4650-b380-d1dc59d0b88f)
 
 ## About Blended Yarn
-Now lets take a hypothetical problem that we want to design a new kind of fabric, which has a cotton like texture but should be quick-dry like polyester cloths. How do we go about creating such a fabric? We do this by using a blended yarn. you may ask what the hack is Blended yarn?  Let me Explain.   
-Imagine a yarn like a big circle in which small circular strands of small circle (i.e. fibers) are kept. As shown in image below with grey and black circle. Coming to our original problem statement, we want texture of cotton, so we would use cotton fibers on outer circle. We want the fabric to also dry-quickly, a property of hydro-phobic polyester fiber, so we will use polyester in the core (i.e Grey circle).  And Eureka!!! our recipe for the hypothetical Fabric is ready!!! Congratulations on just inventing a first of kind its fabric. Now let's send it for manufacturing.  
+Now, lets take a hypothetical problem, we want to design a new kind of fabric, this need to have cotton like texture but should be quick-dry like polyester cloths. How do we go about creating such a fabric? Let me answer, we do this by using a blended yarn. You may ask, what the hack is Blended yarn?  Let me Explain.   
+Imagine a yarn like a big circle in which small circular strands of small circle (i.e. fibers) are kept. As shown in image below with grey and black circle. In very crude terms fiber on the outside will decide how the texture of fabric would be, while the fiber on the inside making the bulk would decide its other property. Now, let's come back to our original case, we want texture of cotton, so we would use cotton fibers on outer circle. We want the fabric to also dry-quickly, a property of hydro-phobic polyester fiber, so we will use polyester in the core (i.e Grey circle).  And Eureka!!! our recipe for the hypothetical Fabric is ready!!! Congratulations, on just inventing a first of kind its fabric. Now We will send it for manufacturing.  
 <table>
   <tr>  
     <td><img src="https://github.com/Im-Himanshu/Yarn-Cross-Section-Image-Processing-CNN/assets/16800094/4957215e-8145-47d5-847f-b0973386d947" alt="Image 5" width="200"></td>  
