@@ -3,7 +3,7 @@
 
 ## Introduction 
 
-Before getting started into the actual project here is some contextual info to understand the world of textile. I will discuss very briefly about shape of fibers and how it affects fiber's physical property. 
+Before getting started into the actual project here is an hypothetical situation to understand the world of textile. I will discuss very briefly about shape of fibers and how it affects fiber's physical property. 
 
 ## About Fibers and Yarns
 As shown in the image below fabric is made up of yarn knitted or woven together in different pattern. Similarly, Yarn is made up of fibres strand twisted together.
@@ -41,7 +41,7 @@ After a year of hard work and multiple experimentation we have got the exact met
 ![img_13.png](https://github.com/Im-Himanshu/Yarn-Cross-Section-Image-Processing-CNN/assets/16800094/b5a3ee56-c6fa-4724-a110-59426182e928)
 
 ## Problem Statement 
-In the above example the after getting the image from microscope, we have to manually mark every pixel with different color, depending on the type of the fiber and then do the radial density analysis manually. To put salt on the wound we also have to do multiple time for each yarn experiment to be sure that is in not an anomalous observation. This marking of image and radial density calculation can be easily automated using the Computer-vision technique.  
+In the above example, after getting images from microscope, we have to manually mark every pixel with different color for each type of the fiber and then do the radial density analysis manually. To put salt on the wound, we also have to do this process multiple time, for each yarn experiment, to be sure that is in not an anomalous observation. This marking of image and radial density calculation can be easily automated using the Computer-vision techniques.  
 
 # Solution.
 
